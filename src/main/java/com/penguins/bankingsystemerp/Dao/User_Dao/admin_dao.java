@@ -67,8 +67,8 @@ public class admin_dao extends SuperDao{
                 closeDbResources();
             }
 
-            }
-       return hasPasswordBeenReset;
+        }
+        return hasPasswordBeenReset;
     }
     
     public boolean updateUserInfo (User user) {

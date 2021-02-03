@@ -18,6 +18,11 @@ public class AdminAccountDao extends SuperAccountDao{
         super(account_no);
     }
     
+    public boolean setNewAccount() {
+        //insert into Account (account_type, user_id, balance_amount, account_status, branch_id, account_number) values (1, 1, 10000.00, 'ACTIVE', 1, DEFAULT)
+        return false;
+    }
+    
     public Account searchAccount() {
         
         

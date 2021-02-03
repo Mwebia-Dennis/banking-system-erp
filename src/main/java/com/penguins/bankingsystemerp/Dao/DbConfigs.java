@@ -46,6 +46,7 @@ public final class DbConfigs {
     }
     public static final class TableTransactions implements BaseColumns {
         public static final String TABLE_NAME = "[banking_system_demo].[dbo].transactions";
+        public static final String VIEW_NAME = "[banking_system_demo].[dbo].transactions_view";
         public static final String ACCOUNT_NUMBER = "account_number";
         public static final String TRANSACTION_TYPE = "transaction_type";
         public static final String TRANSACTION_CODE = "transaction_code";
