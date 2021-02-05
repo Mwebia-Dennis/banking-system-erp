@@ -22,7 +22,7 @@ import com.penguins.bankingsystemerp.utilities.LogMessages;
 public class AdminAccountDao extends SuperAccountDao{
     
     
-    public AdminAccountDao(float account_no) {
+    public AdminAccountDao(String account_no) {
         super(account_no);
     }
     
@@ -42,7 +42,8 @@ public class AdminAccountDao extends SuperAccountDao{
                     +", "+DbConfigs.TableAccount.USER_ID +", "+DbConfigs.TableAccount.BALANCE_AMOUNT +", "
                     +DbConfigs.TableAccount.ACCOUNT_STATUS +", "+DbConfigs.TableAccount.BRANCH_ID +", "
                     +DbConfigs.TableAccount.ACCOUNT_NUMBER +")"
-                    + " values ('"+account.getAccount_type()+"', '"+account.getUser_id()+"', '"+account.getBalance()+"', '"+account.getAccount_status()+"', '"+account.getBranch_id()+"', 'DEFAULT')");
+                    + " values ("+account.getAccount_type_id()+", "+account.getUser_id()+", "+account.getBalance()+", '"+account.getAccount_status()+"', "+account.getBranch_id()+", DEFAULT)");
+            
 
             hasAccountBeenSet = (affectedRows > 0);
 
@@ -51,6 +52,13 @@ public class AdminAccountDao extends SuperAccountDao{
 
         }catch(SQLException se){
             //Handle errors for JDBC
+        	System.out.println("insert into "
+                    +DbConfigs.TableAccount.TABLE_NAME+ " ("+DbConfigs.TableAccount.ACCCOUNT_TYPE
+                    +", "+DbConfigs.TableAccount.USER_ID +", "+DbConfigs.TableAccount.BALANCE_AMOUNT +", "
+                    +DbConfigs.TableAccount.ACCOUNT_STATUS +", "+DbConfigs.TableAccount.BRANCH_ID +", "
+                    +DbConfigs.TableAccount.ACCOUNT_NUMBER +")"
+                    + " values ("+account.getAccount_type_id()+", "+account.getUser_id()+", "+account.getBalance()+", '"+account.getAccount_status()+"', "+account.getBranch_id()+", 'DEFAULT')");
+
             se.printStackTrace();
         }catch(Exception ex) {
             LogMessages.log(ex.getMessage());
@@ -60,7 +68,7 @@ public class AdminAccountDao extends SuperAccountDao{
         return hasAccountBeenSet;
     }
     
-    public ArrayList<Account> searchAccounts() {
+    public ArrayList<Account> searchAccounts(String query) {
         
         
     	ArrayList<Account> listOfSearchedAccounts = new ArrayList<>();
@@ -72,14 +80,14 @@ public class AdminAccountDao extends SuperAccountDao{
             statement = conn.createStatement();
             
             ResultSet result = statement.executeQuery("SELECT TOP (5) * FROM "+DbConfigs.TableAccount.VIEW_NAME+" where "+DbConfigs.TableAccount.ACCOUNT_NUMBER
-            		+" like '%"+account_no+"%' order by "+DbConfigs.TableAccount.DATE_ADDED);
+            		+" like concat('%', TRY_CONVERT(uniqueidentifier,'"+query+"'), '%' ) order by "+DbConfigs.TableAccount.DATE_ADDED);
             
             while(result.next()) {
                 
             	listOfSearchedAccounts.add(new Account(result.getInt(DbConfigs.TableAccount._ID),
-	            			result.getString(DbConfigs.TableAccount.ACCCOUNT_TYPE),
+	            			result.getString(DbConfigs.TableAccountType.ACCOUNT_NAME),
 	            			result.getString(DbConfigs.TableUsers.ID_NUMBER),
-	            			result.getString(DbConfigs.TableUsers.F_NAME) + " " +result.getInt(DbConfigs.TableUsers.L_NAME),
+	            			result.getString(DbConfigs.TableUsers.F_NAME) + " " +result.getString(DbConfigs.TableUsers.L_NAME),
 	            			result.getDouble(DbConfigs.TableAccount.BALANCE_AMOUNT),
 	            			result.getString(DbConfigs.TableAccount.ACCOUNT_NUMBER),
 	            			result.getString(DbConfigs.TableAccount.ACCOUNT_STATUS),
@@ -108,7 +116,7 @@ public class AdminAccountDao extends SuperAccountDao{
     public ArrayList<Account> getListOfAllAccounts() {
         
         
-    	ArrayList<Account> listOfSearchedAccounts = new ArrayList<>();
+    	ArrayList<Account> listOfAllAccounts = new ArrayList<>();
     	
     	try{
             
@@ -120,16 +128,16 @@ public class AdminAccountDao extends SuperAccountDao{
             
             while(result.next()) {
                 
-            	listOfSearchedAccounts.add(new Account(result.getInt(DbConfigs.TableAccount._ID),
-	            			result.getString(DbConfigs.TableAccount.ACCCOUNT_TYPE),
-	            			result.getString(DbConfigs.TableUsers.ID_NUMBER),
-	            			result.getString(DbConfigs.TableUsers.F_NAME) + " " +result.getInt(DbConfigs.TableUsers.L_NAME),
-	            			result.getDouble(DbConfigs.TableAccount.BALANCE_AMOUNT),
-	            			result.getString(DbConfigs.TableAccount.ACCOUNT_NUMBER),
-	            			result.getString(DbConfigs.TableAccount.ACCOUNT_STATUS),
-	            			result.getString(DbConfigs.TableBankBranch.BRANCH_NAME),
-	            			result.getString(DbConfigs.TableAccount.DATE_ADDED)
-            			));
+            	listOfAllAccounts.add(new Account(result.getInt(DbConfigs.TableAccount._ID),
+            			result.getString(DbConfigs.TableAccountType.ACCOUNT_NAME),
+            			result.getString(DbConfigs.TableUsers.ID_NUMBER),
+            			result.getString(DbConfigs.TableUsers.F_NAME) + " " +result.getString(DbConfigs.TableUsers.L_NAME),
+            			result.getDouble(DbConfigs.TableAccount.BALANCE_AMOUNT),
+            			result.getString(DbConfigs.TableAccount.ACCOUNT_NUMBER),
+            			result.getString(DbConfigs.TableAccount.ACCOUNT_STATUS),
+            			result.getString(DbConfigs.TableBankBranch.BRANCH_NAME),
+            			result.getString(DbConfigs.TableAccount.DATE_ADDED)
+        			));
                 
             }
             
@@ -146,7 +154,7 @@ public class AdminAccountDao extends SuperAccountDao{
             closeDbResources();
         }
     	
-    	return listOfSearchedAccounts;
+    	return listOfAllAccounts;
     }
     
     

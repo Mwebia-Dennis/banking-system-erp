@@ -7,8 +7,6 @@ package com.penguins.bankingsystemerp.Dao.TransactionDao;
 
 import com.penguins.bankingsystemerp.Dao.DbConfigs;
 import com.penguins.bankingsystemerp.utilities.Transactions;
-import com.penguins.bankingsystemerp.utilities.User;
-
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -30,7 +28,7 @@ public class AdminTransactionDao extends SuperTransactionDao{
             statement = conn.createStatement();
             
             ResultSet result = statement.executeQuery("select * from "+DbConfigs.TableTransactions.VIEW_NAME+" order by "
-                    +DbConfigs.TableTransactions.DATE_ADDED);
+                    +DbConfigs.TableTransactions.DATE_ADDED+ " desc");
             
             while(result.next()) {
                 
@@ -69,7 +67,7 @@ public class AdminTransactionDao extends SuperTransactionDao{
             conn = DriverManager.getConnection(DbConfigs.DB_URL, DbConfigs.USER, DbConfigs.PASS);            
             statement = conn.createStatement();
             ResultSet result = statement.executeQuery("select * from "+DbConfigs.TableTransactions.VIEW_NAME+" where "
-            			+DbConfigs.TableTransactions.TRANSACTION_CODE+" = '%"+transaction_code+"%' order by "+DbConfigs.TableTransactions.DATE_ADDED);
+        			+DbConfigs.TableTransactions.TRANSACTION_CODE + " like concat('%', TRY_CONVERT(uniqueidentifier,'"+transaction_code+"'), '%' ) order by "+DbConfigs.TableTransactions.DATE_ADDED+" desc");
             
             while(result.next()) {
                 
@@ -110,7 +108,7 @@ public class AdminTransactionDao extends SuperTransactionDao{
             statement = conn.createStatement();
             
             ResultSet result = statement.executeQuery("select top 1 * from "+DbConfigs.TableTransactions.VIEW_NAME+" where  "+DbConfigs.TableTransactions.TRANSACTION_CODE
-            		+" = '"+transaction_code+"' order by "+DbConfigs.TableTransactions.DATE_ADDED);
+            		+" = TRY_CONVERT(uniqueidentifier,'"+transaction_code+"') order by "+DbConfigs.TableTransactions.DATE_ADDED+" desc");
             
             while(result.next()) {
                 

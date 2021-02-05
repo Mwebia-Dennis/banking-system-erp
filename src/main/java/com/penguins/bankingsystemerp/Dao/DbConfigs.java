@@ -13,8 +13,8 @@ public final class DbConfigs {
     
     
    // JDBC driver name and database URL
-   public static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";  
-   public static final String DB_URL = "";
+   public static final String JDBC_DRIVER = "com.microsoft.sqlserver.jdbc.SQLServerDriver";  
+   public static final String DB_URL = "jdbc:sqlserver://localhost:1433;databaseName=banking_system_demo";
 
    //  Database credentials
    public static final String USER = "sa";

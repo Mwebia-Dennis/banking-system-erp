@@ -15,4 +15,6 @@ public final class AccountStatus {
     public static final String SUSPENDED = "SUSPENDED";
     public static final String LOCKED = "LOCKED";
     
+    private AccountStatus() {}
+    
 }

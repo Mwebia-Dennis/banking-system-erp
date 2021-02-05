@@ -21,11 +21,11 @@ import com.penguins.bankingsystemerp.utilities.AccountStatus;
  */
 public class SuperAccountDao {
     
-    protected float account_no;
+    protected String account_no;
     protected Connection conn = null;
     protected Statement statement = null; 
 
-    public SuperAccountDao(float account_no) {
+    public SuperAccountDao(String account_no) {
         this.account_no = account_no;
     }
     
@@ -45,15 +45,15 @@ public class SuperAccountDao {
             while(result.next()) {
                 
             	account = new Account(result.getInt(DbConfigs.TableAccount._ID),
-	            			result.getString(DbConfigs.TableAccount.ACCCOUNT_TYPE),
-	            			result.getString(DbConfigs.TableUsers.ID_NUMBER),
-	            			result.getString(DbConfigs.TableUsers.F_NAME) + " " +result.getInt(DbConfigs.TableUsers.L_NAME),
-	            			result.getDouble(DbConfigs.TableAccount.BALANCE_AMOUNT),
-	            			result.getString(DbConfigs.TableAccount.ACCOUNT_NUMBER),
-	            			result.getString(DbConfigs.TableAccount.ACCOUNT_STATUS),
-	            			result.getString(DbConfigs.TableBankBranch.BRANCH_NAME),
-	            			result.getString(DbConfigs.TableAccount.DATE_ADDED)
-            			);
+            			result.getString(DbConfigs.TableAccountType.ACCOUNT_NAME),
+            			result.getString(DbConfigs.TableUsers.ID_NUMBER),
+            			result.getString(DbConfigs.TableUsers.F_NAME) + " " +result.getString(DbConfigs.TableUsers.L_NAME),
+            			result.getDouble(DbConfigs.TableAccount.BALANCE_AMOUNT),
+            			result.getString(DbConfigs.TableAccount.ACCOUNT_NUMBER),
+            			result.getString(DbConfigs.TableAccount.ACCOUNT_STATUS),
+            			result.getString(DbConfigs.TableBankBranch.BRANCH_NAME),
+            			result.getString(DbConfigs.TableAccount.DATE_ADDED)
+        			);
                 break;
                 
             }
@@ -90,15 +90,15 @@ public class SuperAccountDao {
             while(result.next()) {
                 
             	account = new Account(result.getInt(DbConfigs.TableAccount._ID),
-	            			result.getString(DbConfigs.TableAccount.ACCCOUNT_TYPE),
-	            			result.getString(DbConfigs.TableUsers.ID_NUMBER),
-	            			result.getString(DbConfigs.TableUsers.F_NAME) + " " +result.getInt(DbConfigs.TableUsers.L_NAME),
-	            			result.getDouble(DbConfigs.TableAccount.BALANCE_AMOUNT),
-	            			result.getString(DbConfigs.TableAccount.ACCOUNT_NUMBER),
-	            			result.getString(DbConfigs.TableAccount.ACCOUNT_STATUS),
-	            			result.getString(DbConfigs.TableBankBranch.BRANCH_NAME),
-	            			result.getString(DbConfigs.TableAccount.DATE_ADDED)
-            			);
+            			result.getString(DbConfigs.TableAccountType.ACCOUNT_NAME),
+            			result.getString(DbConfigs.TableUsers.ID_NUMBER),
+            			result.getString(DbConfigs.TableUsers.F_NAME) + " " +result.getString(DbConfigs.TableUsers.L_NAME),
+            			result.getDouble(DbConfigs.TableAccount.BALANCE_AMOUNT),
+            			result.getString(DbConfigs.TableAccount.ACCOUNT_NUMBER),
+            			result.getString(DbConfigs.TableAccount.ACCOUNT_STATUS),
+            			result.getString(DbConfigs.TableBankBranch.BRANCH_NAME),
+            			result.getString(DbConfigs.TableAccount.DATE_ADDED)
+        			);
                 break;
                 
             }

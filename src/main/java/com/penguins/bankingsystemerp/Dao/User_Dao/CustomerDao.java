@@ -11,9 +11,9 @@ import com.penguins.bankingsystemerp.utilities.UserRoles;
  *
  * @author dgitonga
  */
-public class customer_dao extends SuperDao{
+public class CustomerDao extends SuperDao{
     
-    public customer_dao(String user_detail) {
+    public CustomerDao(String user_detail) {
         super(user_detail);
     }
     
@@ -21,7 +21,7 @@ public class customer_dao extends SuperDao{
         //authenticate user then check if is customer
         if(authenticateUser(password)) {
             
-            return (getUserDetails().getUser_role().equals(UserRoles.CUSTOMER));
+            return (getUserDetails().getUser_role().toLowerCase().equals(UserRoles.CUSTOMER.toLowerCase()));
         }
         return false;
         

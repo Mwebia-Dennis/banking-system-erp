@@ -16,9 +16,9 @@ import java.util.ArrayList;
  *
  * @author dgitonga
  */
-public class admin_dao extends SuperDao{
+public class AdminDao extends SuperDao{
 
-    public admin_dao(String user_detail) {
+    public AdminDao(String user_detail) {
         super(user_detail);
     }
     
@@ -26,17 +26,17 @@ public class admin_dao extends SuperDao{
         //authenticate user then check if is admin
         if(authenticateUser(password)) {
             
-            return (getUserDetails().getUser_role().equals(UserRoles.ADMIN));
+            return (getUserDetails().getUser_role().toLowerCase().equals(UserRoles.ADMIN.toLowerCase()));
         }
         return false;
     }
     
-    public boolean registerNewUser(User user, String password) {
+    public boolean registerNewUser(User user) {
         
         //first check if user exists
         boolean hasPasswordBeenReset = false;
-        
-        if(!getUserDetails().getNational_id().equals(user.getNational_id())){
+        User new_user = getUserDetails();
+        if(new_user == null){
             
             //set user
             try{
@@ -50,19 +50,24 @@ public class admin_dao extends SuperDao{
                         +", "+DbConfigs.TableUsers.L_NAME +", "+DbConfigs.TableUsers.EMAIL +", "
                         +DbConfigs.TableUsers.USER_PASSWORD +", "+DbConfigs.TableUsers.PHONE_NO +", "
                         +DbConfigs.TableUsers.ID_NUMBER +", "+DbConfigs.TableUsers.USER_ROLE +")"
-                        + " values ('"+user.getF_name()+"', '"+user.getL_name()+"', '"+user.getEmail()+"', '"+password+"', '"+user.getPhone_no()+"', '"
+                        + " values ('"+user.getF_name()+"', '"+user.getL_name()+"', '"+user.getEmail()+"', '"+user.getPassword()+"', '"+user.getPhone_no()+"', '"
                         +user.getNational_id()+"', '"+user.getUser_role()+"')");
+                
 
-                hasPasswordBeenReset = (affectedRows > 0);
+            	hasPasswordBeenReset = (affectedRows > 0);
 
                 statement.close();
                 conn.close();
 
-            }catch(SQLException se){
+            }catch(SQLException ex){
                 //Handle errors for JDBC
-                se.printStackTrace();
+                ex.printStackTrace();
+            	System.out.println("sql exception");
+            	System.out.println(ex);
             }catch(Exception ex) {
                 LogMessages.log(ex.getMessage());
+            	System.out.println("general exception");
+            	System.out.println(ex);
             }finally{
                 closeDbResources();
             }
@@ -80,12 +85,11 @@ public class admin_dao extends SuperDao{
             Class.forName(DbConfigs.JDBC_DRIVER);            
             conn = DriverManager.getConnection(DbConfigs.DB_URL, DbConfigs.USER, DbConfigs.PASS);            
             statement = conn.createStatement();
-            
             int affectedRows = statement.executeUpdate("update "+DbConfigs.TableUsers.TABLE_NAME+" set "
-                    +DbConfigs.TableUsers.F_NAME +" = '"+user.getF_name()+"'"
-                    +DbConfigs.TableUsers.L_NAME +" = '"+user.getL_name()+"'"
-                    +DbConfigs.TableUsers.EMAIL +" = '"+user.getEmail()+"'"
-                    +DbConfigs.TableUsers.PHONE_NO +" = '"+user.getPhone_no()+"'"
+                    +DbConfigs.TableUsers.F_NAME +" = '"+user.getF_name()+"',"
+                    +DbConfigs.TableUsers.L_NAME +" = '"+user.getL_name()+"',"
+                    +DbConfigs.TableUsers.EMAIL +" = '"+user.getEmail()+"',"
+                    +DbConfigs.TableUsers.PHONE_NO +" = '"+user.getPhone_no()+"',"
                     +DbConfigs.TableUsers.USER_ROLE +" = '"+user.getUser_role()+"'"
                     + " where "+DbConfigs.TableUsers._ID+" = '"+user.getUser_id()+"'");
             
@@ -94,11 +98,14 @@ public class admin_dao extends SuperDao{
             statement.close();
             conn.close();
             
-        }catch(SQLException se){
+        }catch(SQLException ex){
             //Handle errors for JDBC
-            se.printStackTrace();
+        	System.out.println("sql exception");
+        	System.out.println(ex);
         }catch(Exception ex) {
-            
+
+        	System.out.println("general exception");
+        	System.out.println(ex);
         }finally{
             closeDbResources();
         }

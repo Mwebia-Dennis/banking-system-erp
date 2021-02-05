@@ -8,7 +8,6 @@ package com.penguins.bankingsystemerp.Dao.TransactionDao;
 import com.penguins.bankingsystemerp.Dao.DbConfigs;
 import com.penguins.bankingsystemerp.utilities.LogMessages;
 import com.penguins.bankingsystemerp.utilities.Transactions;
-import com.penguins.bankingsystemerp.utilities.User;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.sql.*;
@@ -23,7 +22,7 @@ public class SuperTransactionDao {
     protected Connection conn = null;
     protected Statement statement = null;
     
-    protected boolean setTransaction(Transactions transaction) {
+    public boolean setTransaction(Transactions transaction) {
         
         
         boolean hasTransactionBeenSet = false;
@@ -55,7 +54,7 @@ public class SuperTransactionDao {
         return hasTransactionBeenSet;
     }
     
-    protected ArrayList<Transactions> getUserTransaction(int user_id) {
+    public ArrayList<Transactions> getUserTransaction(int user_id) {
         
         ArrayList<Transactions> listOfAllUserTransactions = new ArrayList<>();
         try{
@@ -65,7 +64,7 @@ public class SuperTransactionDao {
             statement = conn.createStatement();
             
             ResultSet result = statement.executeQuery("select * from "+DbConfigs.TableTransactions.VIEW_NAME+" where "
-                    +DbConfigs.TableTransactions.USER_ID+" = "+user_id+" order by "+DbConfigs.TableTransactions.DATE_ADDED);
+                    +DbConfigs.TableTransactions.USER_ID+" = "+user_id+" order by "+DbConfigs.TableTransactions.DATE_ADDED+" DESC");
             
             while(result.next()) {
                 

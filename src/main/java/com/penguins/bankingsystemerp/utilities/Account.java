@@ -13,7 +13,7 @@ public class Account {
     
     private String account_type, id_number, user_name, account_number, account_status,branch, date_added;
     double balance;  
-    private int account_id, user_id, branch_id;
+    private int account_id, user_id, branch_id,account_type_id;
 
     public Account(int account_id, String account_type, String id_number, String user_name, double balance, String account_number, String account_status, String branch, String date_added) {
         this.account_id = account_id;
@@ -27,9 +27,9 @@ public class Account {
         this.date_added = date_added;
     }
     
-    public Account(int account_id, String account_type, String id_number, int user_id, double balance, String account_number, String account_status, int branch_id, String date_added) {
+    public Account(int account_id, int account_type_id, String id_number, int user_id, double balance, String account_number, String account_status, int branch_id, String date_added) {
         this.account_id = account_id;
-        this.account_type = account_type;
+        this.account_type_id = account_type_id;
         this.id_number = id_number;
         this.user_id = user_id;
         this.balance = balance;
@@ -45,6 +45,11 @@ public class Account {
 
     public String getAccount_type() {
         return account_type;
+    }
+    
+    public int getAccount_type_id() {
+    	
+    	return account_type_id;
     }
 
 	public String getId_number() {

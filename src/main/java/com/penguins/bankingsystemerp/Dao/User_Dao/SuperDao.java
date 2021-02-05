@@ -37,11 +37,11 @@ public class SuperDao {
             
             statement = conn.createStatement();
             ResultSet resultSet = statement.executeQuery("select id from "+DbConfigs.TableUsers.TABLE_NAME+" where "
-                    +DbConfigs.TableUsers.EMAIL +" = '"+user_detail+" and "+DbConfigs.TableUsers.USER_PASSWORD+" = '"+password+"'"
+                    +DbConfigs.TableUsers.EMAIL +" = '"+user_detail+"' and "+DbConfigs.TableUsers.USER_PASSWORD+" = '"+password+"'"
                     + " or "+DbConfigs.TableUsers.PHONE_NO+" = '"+user_detail+"' and "+DbConfigs.TableUsers.USER_PASSWORD+" = '"+password+"' "
                     + " or "+DbConfigs.TableUsers.ID_NUMBER+" = '"+user_detail+"' and "+DbConfigs.TableUsers.USER_PASSWORD+" = '"+password+"'");
             
-            //check if qwe got any data else return false
+            //check if we got any data else return false
             if(resultSet.next() != false) {
                 isQueryExecutionSuccessful = true;
             }
