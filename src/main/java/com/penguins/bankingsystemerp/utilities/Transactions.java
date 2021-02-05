@@ -11,11 +11,11 @@ package com.penguins.bankingsystemerp.utilities;
  */
 public class Transactions {
     
-    private String transaction_type, user_name, served_by_name, date_of_transaction;
+    private String transaction_type, user_name, date_of_transaction, transaction_code;
     private double amount;
-    private int transaction_code;
+    private int served_by_name;
 
-    public Transactions(String transaction_type, String user_name, String served_by_name, String date_of_transaction, double amount, int transaction_code) {
+    public Transactions(String transaction_type, String user_name, int served_by_name, String date_of_transaction, double amount, String transaction_code) {
         this.transaction_type = transaction_type;
         this.user_name = user_name;
         this.served_by_name = served_by_name;
@@ -32,7 +32,7 @@ public class Transactions {
         return user_name;
     }
 
-    public String getServed_by_name() {
+    public int getServed_by_name() {
         return served_by_name;
     }
 
@@ -44,7 +44,7 @@ public class Transactions {
         return amount;
     }
 
-    public int getTransaction_code() {
+    public String getTransaction_code() {
         return transaction_code;
     }
     

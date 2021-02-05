@@ -57,8 +57,7 @@ public class SuperTransactionDao {
     
     protected ArrayList getUserTransaction(int user_id) {
         
-        ArrayList<User> listOfAllUser = new ArrayList<>();
-        Transactions transaction = null;
+        ArrayList<Transactions> listOfAllUserTransactions = new ArrayList<>();
         try{
             
             Class.forName(DbConfigs.JDBC_DRIVER);            
@@ -70,14 +69,13 @@ public class SuperTransactionDao {
             
             while(result.next()) {
                 
-                transaction = new Transactions(result.getInt(DbConfigs.TableUsers._ID),
-                        result.getString(DbConfigs.TableUsers.F_NAME),
-                        result.getString(DbConfigs.TableUsers.L_NAME),
-                        result.getString(DbConfigs.TableUsers.EMAIL),
-                        result.getString(DbConfigs.TableUsers.PHONE_NO),
-                        result.getString(DbConfigs.TableUsers.ID_NUMBER),
-                        result.getString(DbConfigs.TableUsers.USER_ROLE));
-                break;
+                listOfAllUserTransactions.add(new Transactions(result.getString(DbConfigs.TableTransactions.TRANSACTION_TYPE),
+                        result.getString(DbConfigs.TableUsers.F_NAME) + " " +result.getString(DbConfigs.TableUsers.L_NAME),
+                        result.getInt(DbConfigs.TableTransactions.SERVED_BY),
+                        result.getString(DbConfigs.TableTransactions.DATE_ADDED),
+                        result.getDouble(DbConfigs.TableTransactions.AMOUNT),
+                        result.getString(DbConfigs.TableTransactions.TRANSACTION_CODE)));
+                
                 
             }
             
@@ -94,7 +92,7 @@ public class SuperTransactionDao {
             closeDbResources();
         }
         
-        return listOfAllUser;
+        return listOfAllUserTransactions;
         
     }
     //function to release jdbc resources
