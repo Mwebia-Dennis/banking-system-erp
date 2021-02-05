@@ -11,13 +11,14 @@ package com.penguins.bankingsystemerp.utilities;
  */
 public class Account {
     
-    private String account_type, user_name, account_number, account_status,branch, date_added;
-    double balance;
-    private int account_id;
+    private String account_type, id_number, user_name, account_number, account_status,branch, date_added;
+    double balance;  
+    private int account_id, user_id, branch_id;
 
-    public Account(int account_id, String account_type, String user_name, double balance, String account_number, String account_status, String branch, String date_added) {
+    public Account(int account_id, String account_type, String id_number, String user_name, double balance, String account_number, String account_status, String branch, String date_added) {
         this.account_id = account_id;
         this.account_type = account_type;
+        this.id_number = id_number;
         this.user_name = user_name;
         this.balance = balance;
         this.account_number = account_number;
@@ -25,7 +26,19 @@ public class Account {
         this.branch = branch;
         this.date_added = date_added;
     }
-
+    
+    public Account(int account_id, String account_type, String id_number, int user_id, double balance, String account_number, String account_status, int branch_id, String date_added) {
+        this.account_id = account_id;
+        this.account_type = account_type;
+        this.id_number = id_number;
+        this.user_id = user_id;
+        this.balance = balance;
+        this.account_number = account_number;
+        this.account_status = account_status;
+        this.branch_id = branch_id;
+        this.date_added = date_added;
+    }
+    
     public int getAccount_id() {
         return account_id;
     }
@@ -33,6 +46,10 @@ public class Account {
     public String getAccount_type() {
         return account_type;
     }
+
+	public String getId_number() {
+		return id_number;
+	}
 
     public String getUser_name() {
         return user_name;
@@ -57,5 +74,15 @@ public class Account {
     public String getDate_added() {
         return date_added;
     }
+    
+    public int getUser_id() {
+        return user_id;
+    }
+    public int getBranch_id() {
+        return branch_id;
+    }
+    
+    
+    
     
 }

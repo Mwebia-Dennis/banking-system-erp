@@ -105,7 +105,9 @@ public class admin_dao extends SuperDao{
         
         return hasPasswordBeenReset;
     }
-    public ArrayList getListOfUsers() {
+    
+    
+    public ArrayList<User> getListOfUsers() {
         
         ArrayList<User> listOfAllUser = new ArrayList<>();
         try{

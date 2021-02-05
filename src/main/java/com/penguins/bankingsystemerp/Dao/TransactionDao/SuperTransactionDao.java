@@ -23,7 +23,7 @@ public class SuperTransactionDao {
     protected Connection conn = null;
     protected Statement statement = null;
     
-    protected boolean setTransaction(Transactions transaction, int user_id, int served_by) {
+    protected boolean setTransaction(Transactions transaction) {
         
         
         boolean hasTransactionBeenSet = false;
@@ -36,7 +36,7 @@ public class SuperTransactionDao {
                 int affectedRows = statement.executeUpdate("insert into "+DbConfigs.TableTransactions.TABLE_NAME+" "
                         + "("+DbConfigs.TableTransactions.AMOUNT+","+DbConfigs.TableTransactions.TRANSACTION_TYPE+","+DbConfigs.TableTransactions.USER_ID
                         +","+DbConfigs.TableTransactions.SERVED_BY+", "+DbConfigs.TableTransactions.TRANSACTION_CODE+") "
-                                + "values ("+transaction.getAmount()+", '"+transaction.getTransaction_type()+"', "+user_id+", "+served_by+", DEFAULT); ");
+                                + "values ("+transaction.getAmount()+", '"+transaction.getTransaction_type()+"', "+transaction.getUser_id()+", "+transaction.getServed_by_id()+", DEFAULT); ");
 
                 hasTransactionBeenSet = (affectedRows > 0);
 
@@ -55,7 +55,7 @@ public class SuperTransactionDao {
         return hasTransactionBeenSet;
     }
     
-    protected ArrayList getUserTransaction(int user_id) {
+    protected ArrayList<Transactions> getUserTransaction(int user_id) {
         
         ArrayList<Transactions> listOfAllUserTransactions = new ArrayList<>();
         try{

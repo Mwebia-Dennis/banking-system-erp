@@ -38,6 +38,7 @@ public final class DbConfigs {
     }
     public static final class TableAccount implements BaseColumns {
         public static final String TABLE_NAME = "[banking_system_demo].[dbo].Account";
+        public static final String VIEW_NAME = "[banking_system_demo].[dbo].User_Account_View";
         public static final String ACCOUNT_NUMBER = "account_number";
         public static final String ACCCOUNT_TYPE = "account_type";
         public static final String BALANCE_AMOUNT = "balance_amount";

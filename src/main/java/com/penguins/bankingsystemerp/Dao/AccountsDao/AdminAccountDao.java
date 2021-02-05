@@ -5,7 +5,15 @@
  */
 package com.penguins.bankingsystemerp.Dao.AccountsDao;
 
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+
+import com.penguins.bankingsystemerp.Dao.DbConfigs;
 import com.penguins.bankingsystemerp.utilities.Account;
+import com.penguins.bankingsystemerp.utilities.AccountStatus;
+import com.penguins.bankingsystemerp.utilities.LogMessages;
 
 /**
  *
@@ -18,34 +26,138 @@ public class AdminAccountDao extends SuperAccountDao{
         super(account_no);
     }
     
-    public boolean setNewAccount() {
+    public boolean setNewAccount(Account account) {
         //insert into Account (account_type, user_id, balance_amount, account_status, branch_id, account_number) values (1, 1, 10000.00, 'ACTIVE', 1, DEFAULT)
-        return false;
+    	
+    	boolean hasAccountBeenSet = false;
+    	//set Account
+        try{
+        
+            Class.forName(DbConfigs.JDBC_DRIVER);            
+            conn = DriverManager.getConnection(DbConfigs.DB_URL, DbConfigs.USER, DbConfigs.PASS);            
+            statement = conn.createStatement();
+    
+            int affectedRows = statement.executeUpdate("insert into "
+                    +DbConfigs.TableAccount.TABLE_NAME+ " ("+DbConfigs.TableAccount.ACCCOUNT_TYPE
+                    +", "+DbConfigs.TableAccount.USER_ID +", "+DbConfigs.TableAccount.BALANCE_AMOUNT +", "
+                    +DbConfigs.TableAccount.ACCOUNT_STATUS +", "+DbConfigs.TableAccount.BRANCH_ID +", "
+                    +DbConfigs.TableAccount.ACCOUNT_NUMBER +")"
+                    + " values ('"+account.getAccount_type()+"', '"+account.getUser_id()+"', '"+account.getBalance()+"', '"+account.getAccount_status()+"', '"+account.getBranch_id()+"', 'DEFAULT')");
+
+            hasAccountBeenSet = (affectedRows > 0);
+
+            statement.close();
+            conn.close();
+
+        }catch(SQLException se){
+            //Handle errors for JDBC
+            se.printStackTrace();
+        }catch(Exception ex) {
+            LogMessages.log(ex.getMessage());
+        }finally{
+            closeDbResources();
+        }
+        return hasAccountBeenSet;
     }
     
-    public Account searchAccount() {
+    public ArrayList<Account> searchAccounts() {
         
         
-        Account account = null;
-        
-        
-        return account;
+    	ArrayList<Account> listOfSearchedAccounts = new ArrayList<>();
+    	
+    	try{
+            
+            Class.forName(DbConfigs.JDBC_DRIVER);            
+            conn = DriverManager.getConnection(DbConfigs.DB_URL, DbConfigs.USER, DbConfigs.PASS);            
+            statement = conn.createStatement();
+            
+            ResultSet result = statement.executeQuery("SELECT TOP (5) * FROM "+DbConfigs.TableAccount.VIEW_NAME+" where "+DbConfigs.TableAccount.ACCOUNT_NUMBER
+            		+" like '%"+account_no+"%' order by "+DbConfigs.TableAccount.DATE_ADDED);
+            
+            while(result.next()) {
+                
+            	listOfSearchedAccounts.add(new Account(result.getInt(DbConfigs.TableAccount._ID),
+	            			result.getString(DbConfigs.TableAccount.ACCCOUNT_TYPE),
+	            			result.getString(DbConfigs.TableUsers.ID_NUMBER),
+	            			result.getString(DbConfigs.TableUsers.F_NAME) + " " +result.getInt(DbConfigs.TableUsers.L_NAME),
+	            			result.getDouble(DbConfigs.TableAccount.BALANCE_AMOUNT),
+	            			result.getString(DbConfigs.TableAccount.ACCOUNT_NUMBER),
+	            			result.getString(DbConfigs.TableAccount.ACCOUNT_STATUS),
+	            			result.getString(DbConfigs.TableBankBranch.BRANCH_NAME),
+	            			result.getString(DbConfigs.TableAccount.DATE_ADDED)
+            			));
+                
+            }
+            
+            result.close();
+            statement.close();
+            conn.close();
+            
+        }catch(SQLException se){
+            //Handle errors for JDBC
+            se.printStackTrace();
+        }catch(Exception ex) {
+            
+        }finally{
+            closeDbResources();
+        }
+    	
+    	return listOfSearchedAccounts;
     }
+    
+    public ArrayList<Account> getListOfAllAccounts() {
+        
+        
+    	ArrayList<Account> listOfSearchedAccounts = new ArrayList<>();
+    	
+    	try{
+            
+            Class.forName(DbConfigs.JDBC_DRIVER);            
+            conn = DriverManager.getConnection(DbConfigs.DB_URL, DbConfigs.USER, DbConfigs.PASS);            
+            statement = conn.createStatement();
+            
+            ResultSet result = statement.executeQuery("SELECT * FROM "+DbConfigs.TableAccount.VIEW_NAME+" order by "+DbConfigs.TableAccount.DATE_ADDED);
+            
+            while(result.next()) {
+                
+            	listOfSearchedAccounts.add(new Account(result.getInt(DbConfigs.TableAccount._ID),
+	            			result.getString(DbConfigs.TableAccount.ACCCOUNT_TYPE),
+	            			result.getString(DbConfigs.TableUsers.ID_NUMBER),
+	            			result.getString(DbConfigs.TableUsers.F_NAME) + " " +result.getInt(DbConfigs.TableUsers.L_NAME),
+	            			result.getDouble(DbConfigs.TableAccount.BALANCE_AMOUNT),
+	            			result.getString(DbConfigs.TableAccount.ACCOUNT_NUMBER),
+	            			result.getString(DbConfigs.TableAccount.ACCOUNT_STATUS),
+	            			result.getString(DbConfigs.TableBankBranch.BRANCH_NAME),
+	            			result.getString(DbConfigs.TableAccount.DATE_ADDED)
+            			));
+                
+            }
+            
+            result.close();
+            statement.close();
+            conn.close();
+            
+        }catch(SQLException se){
+            //Handle errors for JDBC
+            se.printStackTrace();
+        }catch(Exception ex) {
+            
+        }finally{
+            closeDbResources();
+        }
+    	
+    	return listOfSearchedAccounts;
+    }
+    
     
     public boolean suspendAccount() {
         
-        return false;
+    	return updateAccountStatus(AccountStatus.SUSPENDED);
     }
     
     public boolean activateAccount() {
         
-        return false;
-    }
-    public Account getUserAccount(String user_detail) {
-         Account account = null;
-        
-        
-        return account;
+    	return updateAccountStatus(AccountStatus.ACTIVE);
     }
     
     
