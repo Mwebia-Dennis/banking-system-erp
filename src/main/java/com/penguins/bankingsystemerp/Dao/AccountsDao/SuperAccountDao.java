@@ -122,6 +122,37 @@ public class SuperAccountDao {
     	return updateAccountStatus(AccountStatus.LOCKED);
     }
     
+    public boolean updateAccountBalance(Account account) {
+    	
+    	boolean hasAccountBeenUpdated = false;
+        try{
+            
+            Class.forName(DbConfigs.JDBC_DRIVER);            
+            conn = DriverManager.getConnection(DbConfigs.DB_URL, DbConfigs.USER, DbConfigs.PASS);            
+            statement = conn.createStatement();
+            int affectedRows = statement.executeUpdate("update "+DbConfigs.TableAccount.TABLE_NAME+" set "
+                    +DbConfigs.TableAccount.BALANCE_AMOUNT +" = '"+account.getBalance()+"',"
+                    + " where "+DbConfigs.TableAccount.ACCOUNT_NUMBER+" = '"+account.getAccount_number()+"'");
+            
+            hasAccountBeenUpdated = (affectedRows > 0);
+            
+            statement.close();
+            conn.close();
+            
+        }catch(SQLException ex){
+            //Handle errors for JDBC
+        	System.out.println("sql exception");
+        	System.out.println(ex);
+        }catch(Exception ex) {
+
+        	System.out.println("general exception");
+        	System.out.println(ex);
+        }finally{
+            closeDbResources();
+        }
+        
+        return hasAccountBeenUpdated;
+    }
     
     public boolean updateAccountStatus(String status) {
     	boolean hasAccountBeenUpdated = false;

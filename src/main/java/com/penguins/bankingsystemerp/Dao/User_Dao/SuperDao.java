@@ -151,4 +151,9 @@ public class SuperDao {
          }
     }
     
+    public String getUser_credential() {
+    	
+    	return user_detail;
+    }
+    
 }

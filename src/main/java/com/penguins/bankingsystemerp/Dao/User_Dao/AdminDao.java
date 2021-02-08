@@ -79,7 +79,7 @@ public class AdminDao extends SuperDao{
     public boolean updateUserInfo (User user) {
         
         
-        boolean hasPasswordBeenReset = false;
+        boolean hasUserBeenUpdated = false;
         try{
             
             Class.forName(DbConfigs.JDBC_DRIVER);            
@@ -93,7 +93,7 @@ public class AdminDao extends SuperDao{
                     +DbConfigs.TableUsers.USER_ROLE +" = '"+user.getUser_role()+"'"
                     + " where "+DbConfigs.TableUsers._ID+" = '"+user.getUser_id()+"'");
             
-            hasPasswordBeenReset = (affectedRows > 0);
+            hasUserBeenUpdated = (affectedRows > 0);
             
             statement.close();
             conn.close();
@@ -110,7 +110,7 @@ public class AdminDao extends SuperDao{
             closeDbResources();
         }
         
-        return hasPasswordBeenReset;
+        return hasUserBeenUpdated;
     }
     
     

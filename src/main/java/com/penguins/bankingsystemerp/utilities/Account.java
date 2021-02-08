@@ -86,6 +86,54 @@ public class Account {
     public int getBranch_id() {
         return branch_id;
     }
+
+	public void setAccount_type(String account_type) {
+		this.account_type = account_type;
+	}
+
+	public void setId_number(String id_number) {
+		this.id_number = id_number;
+	}
+
+	public void setUser_name(String user_name) {
+		this.user_name = user_name;
+	}
+
+	public void setAccount_number(String account_number) {
+		this.account_number = account_number;
+	}
+
+	public void setAccount_status(String account_status) {
+		this.account_status = account_status;
+	}
+
+	public void setBranch(String branch) {
+		this.branch = branch;
+	}
+
+	public void setDate_added(String date_added) {
+		this.date_added = date_added;
+	}
+
+	public void setBalance(double balance) {
+		this.balance = balance;
+	}
+
+	public void setAccount_id(int account_id) {
+		this.account_id = account_id;
+	}
+
+	public void setUser_id(int user_id) {
+		this.user_id = user_id;
+	}
+
+	public void setBranch_id(int branch_id) {
+		this.branch_id = branch_id;
+	}
+
+	public void setAccount_type_id(int account_type_id) {
+		this.account_type_id = account_type_id;
+	}
     
     
     

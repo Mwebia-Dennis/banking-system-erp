@@ -157,12 +157,7 @@ public class AdminAccountDao extends SuperAccountDao{
     	return listOfAllAccounts;
     }
     
-    
-    public boolean suspendAccount() {
         
-    	return updateAccountStatus(AccountStatus.SUSPENDED);
-    }
-    
     public boolean activateAccount() {
         
     	return updateAccountStatus(AccountStatus.ACTIVE);
