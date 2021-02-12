@@ -34,7 +34,7 @@ public class AdminTransactionDao extends SuperTransactionDao{
                 
                 listOfAllTransactions.add(new Transactions(result.getString(DbConfigs.TableTransactions.TRANSACTION_TYPE),
                         result.getString(DbConfigs.TableUsers.F_NAME) + " " +result.getString(DbConfigs.TableUsers.L_NAME),
-                        result.getInt(DbConfigs.TableTransactions.SERVED_BY),
+                        result.getString(DbConfigs.TableTransactions.TRANSFERED_TO),
                         result.getString(DbConfigs.TableTransactions.DATE_ADDED),
                         result.getDouble(DbConfigs.TableTransactions.AMOUNT),
                         result.getString(DbConfigs.TableTransactions.TRANSACTION_CODE)));
@@ -73,7 +73,7 @@ public class AdminTransactionDao extends SuperTransactionDao{
                 
                 listOfAllTransactions.add(new Transactions(result.getString(DbConfigs.TableTransactions.TRANSACTION_TYPE),
                         result.getString(DbConfigs.TableUsers.F_NAME) + " " +result.getString(DbConfigs.TableUsers.L_NAME),
-                        result.getInt(DbConfigs.TableTransactions.SERVED_BY),
+                        result.getString(DbConfigs.TableTransactions.TRANSFERED_TO),
                         result.getString(DbConfigs.TableTransactions.DATE_ADDED),
                         result.getDouble(DbConfigs.TableTransactions.AMOUNT),
                         result.getString(DbConfigs.TableTransactions.TRANSACTION_CODE)));
@@ -114,7 +114,7 @@ public class AdminTransactionDao extends SuperTransactionDao{
                 
             	transaction = new Transactions(result.getString(DbConfigs.TableTransactions.TRANSACTION_TYPE),
                         result.getString(DbConfigs.TableUsers.F_NAME) + " " +result.getString(DbConfigs.TableUsers.L_NAME),
-                        result.getInt(DbConfigs.TableTransactions.SERVED_BY),
+                        result.getString(DbConfigs.TableTransactions.TRANSFERED_TO),
                         result.getString(DbConfigs.TableTransactions.DATE_ADDED),
                         result.getDouble(DbConfigs.TableTransactions.AMOUNT),
                         result.getString(DbConfigs.TableTransactions.TRANSACTION_CODE));

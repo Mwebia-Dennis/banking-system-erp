@@ -52,7 +52,7 @@ public final class DbConfigs {
         public static final String TRANSACTION_TYPE = "transaction_type";
         public static final String TRANSACTION_CODE = "transaction_code";
         public static final String AMOUNT = "amount";
-        public static final String SERVED_BY = "served_by";
+        public static final String TRANSFERED_TO = "transfered_to_account_no";
     }
     public static final class TableAccountType implements BaseColumns {
         public static final String TABLE_NAME = "[banking_system_demo].[dbo].account_type";

@@ -34,8 +34,8 @@ public class SuperTransactionDao {
         
                 int affectedRows = statement.executeUpdate("insert into "+DbConfigs.TableTransactions.TABLE_NAME+" "
                         + "("+DbConfigs.TableTransactions.AMOUNT+","+DbConfigs.TableTransactions.TRANSACTION_TYPE+","+DbConfigs.TableTransactions.USER_ID
-                        +","+DbConfigs.TableTransactions.SERVED_BY+", "+DbConfigs.TableTransactions.TRANSACTION_CODE+") "
-                                + "values ("+transaction.getAmount()+", '"+transaction.getTransaction_type()+"', "+transaction.getUser_id()+", "+transaction.getServed_by_id()+", DEFAULT); ");
+                        +","+DbConfigs.TableTransactions.TRANSFERED_TO+", "+DbConfigs.TableTransactions.TRANSACTION_CODE+") "
+                                + "values ("+transaction.getAmount()+", '"+transaction.getTransaction_type()+"', "+transaction.getUser_id()+", "+transaction.getTransferred_to_account()+", DEFAULT); ");
 
                 hasTransactionBeenSet = (affectedRows > 0);
 
@@ -70,7 +70,7 @@ public class SuperTransactionDao {
                 
                 listOfAllUserTransactions.add(new Transactions(result.getString(DbConfigs.TableTransactions.TRANSACTION_TYPE),
                         result.getString(DbConfigs.TableUsers.F_NAME) + " " +result.getString(DbConfigs.TableUsers.L_NAME),
-                        result.getInt(DbConfigs.TableTransactions.SERVED_BY),
+                        result.getString(DbConfigs.TableTransactions.TRANSFERED_TO),
                         result.getString(DbConfigs.TableTransactions.DATE_ADDED),
                         result.getDouble(DbConfigs.TableTransactions.AMOUNT),
                         result.getString(DbConfigs.TableTransactions.TRANSACTION_CODE)));

@@ -11,23 +11,23 @@ package com.penguins.bankingsystemerp.utilities;
  */
 public class Transactions {
     
-    private String transaction_type, user_name, date_of_transaction, transaction_code;
+    private String transaction_type, user_name, date_of_transaction, transaction_code,transferred_to_account;
     private double amount;
-    private int served_by_id,user_id;
+    private int user_id;
 
-    public Transactions(String transaction_type, String user_name, int served_by_id, String date_of_transaction, double amount, String transaction_code) {
+    public Transactions(String transaction_type, String user_name, String transferred_to_account, String date_of_transaction, double amount, String transaction_code) {
         this.transaction_type = transaction_type;
         this.user_name = user_name;
-        this.served_by_id = served_by_id;
+        this.transferred_to_account = transferred_to_account;
         this.date_of_transaction = date_of_transaction;
         this.amount = amount;
         this.transaction_code = transaction_code;
     }
     
-    public Transactions(String transaction_type, int user_id, int served_by_id, String date_of_transaction, double amount, String transaction_code) {
+    public Transactions(String transaction_type, int user_id, String transferred_to_account, String date_of_transaction, double amount, String transaction_code) {
         this.transaction_type = transaction_type;
         this.user_id = user_id;
-        this.served_by_id = served_by_id;
+        this.transferred_to_account = transferred_to_account;
         this.date_of_transaction = date_of_transaction;
         this.amount = amount;
         this.transaction_code = transaction_code;
@@ -46,8 +46,8 @@ public class Transactions {
         return user_name;
     }
 
-    public int getServed_by_id() {
-        return served_by_id;
+    public String getTransferred_to_account() {
+        return transferred_to_account;
     }
 
     public String getDate_of_transaction() {
