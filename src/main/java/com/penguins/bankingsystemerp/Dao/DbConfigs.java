@@ -18,7 +18,7 @@ public final class DbConfigs {
 
    //  Database credentials
    public static final String USER = "sa";
-   public static final String PASS = "Ftk@2021";
+   public static final String PASS = "Gitongah16";
    
    /*
    *all tables and their corresponding column names
